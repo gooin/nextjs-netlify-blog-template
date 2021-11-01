@@ -5,9 +5,19 @@ tags:
     name: mock
   - slug: style
     name: style
-  - slug: license
-    name: license
   - slug: mdx
     name: mdx
   - slug: markdown
     name: markdown
+  - slug: git
+    name: git
+  - slug: webpack
+    name: webpack
+  - slug: frontend
+    name: frontend
+  - slug: ue
+    name: ue
+  - slug: gis
+    name: gis
+  - slug: webgl
+    name: webgl
