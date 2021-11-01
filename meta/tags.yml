@@ -9,6 +9,8 @@ tags:
     name: mdx
   - slug: markdown
     name: markdown
+  - slug: license
+    name: license
   - slug: git
     name: git
   - slug: webpack
