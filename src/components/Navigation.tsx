@@ -43,7 +43,7 @@ export default function Navigation() {
               padding: 0;
               position: fixed;
               top: 0;
-              background-color: #fff;
+              //background-color: #fff;
               display: flex;
               flex-direction: column;
               justify-content: center;
