@@ -1,0 +1,39 @@
+---
+slug: typescript-ReturnType
+title: "[type-chanlleges] 不使用 `ReturnType` 实现 TypeScript 的 `ReturnType<T>` 范型。"
+date: 2021-11-18
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+
+  
+  不使用 `ReturnType` 实现 TypeScript 的 `ReturnType<T>` 范型。
+  
+  例如：
+  
+  ```ts
+  const fn = (v: boolean) => {
+    if (v)
+      return 1
+    else
+      return 2
+  }
+  
+  type a = MyReturnType<typeof fn> // 应推导出 "1 | 2"
+  ```
+
+## 解：
+```ts
+type MyReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;
+```
+- 要提取返回值，传入的参数肯定是函数，所以有`T extends (...args: any) => any`，用`extends`来限制类型是函数。
+- `infer` 表示在 `extends` 条件语句中待推断的类型变量。题目要求获取返回值，所以在返回值前使用`infer`关键字，推断返回值的类型。
+
+
+### ref:
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[获取函数返回类型](https://github.com/type-challenges/type-challenges/blob/master/questions/2-medium-return-type/README.zh-CN.md)
+
