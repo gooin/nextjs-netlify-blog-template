@@ -23,3 +23,5 @@ tags:
     name: gis
   - slug: webgl
     name: webgl
+  - slug: typescript
+    name: typescript
