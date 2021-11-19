@@ -1,0 +1,79 @@
+---
+slug: typescript-omit
+title: "[type-chanlleges] 实现 Omit "
+date: 2021-11-19
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+
+
+不使用 `Omit` 实现 TypeScript 的 `Omit<T, K>` 范型。
+
+`Omit` 会创建一个省略 `K` 中字段的 `T` 对象。
+
+例如：
+
+```ts
+interface Todo {
+  title: string
+  description: string
+  completed: boolean
+}
+
+type TodoPreview = MyOmit<Todo, 'description' | 'title'>
+
+const todo: TodoPreview = {
+  completed: false,
+}
+```
+
+## 解 1：
+```ts
+type MyOmit<T, K extends keyof T> = Pick<T,{
+  [O in keyof T]: O extends K ? never : O
+}[keyof T]>
+```
+### 解2：
+```ts
+type MyOmit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+```
+
+关于解1： 
+首先想到的是类似`Pick`的实现,如下： 
+```ts
+type Pick<T, K extends keyof T> = {
+   [P in K]: T[P]
+}
+```
+只要找到一个`[P not in K]: T[P]`就完事了，然而事情并没这没简单。
+翻了翻github，找到两个`issue`, 是关于否定类型的：
+[Negated Types](https://github.com/microsoft/TypeScript/pull/29317#ref-issue-211954024)
+["not in keyof T" - exclude keyof T from string](https://github.com/microsoft/TypeScript/issues/42315)
+提案大概是直接在前面加个`not`表示否定
+```ts
+not T
+```
+- not not T is T
+- not (A | B | C | ...) is not A & not B & not C & not ...
+- not (A & B & C & ...) is not A | not B | not C | not ...
+- not unknown is never
+- not never is unknown
+
+**但是并没有合入主干中**，只能想其他办法。
+
+思路就是用`Pick`，`Pick`的第二参数实现一个`Exclude`,这样的结果就是`Omit`了
+
+
+### ref:
+**`extends keyof`和`in keyof` 区别** ： 
+[In TypeScript, what do "extends keyof" and "in keyof" mean?](https://stackoverflow.com/questions/57337598/in-typescript-what-do-extends-keyof-and-in-keyof-mean)
+
+**`Exclude` 和 `Omit` 的区别**: 
+[Difference b/w only Exclude and Omit (Pick & Exclude) Typescript](https://stackoverflow.com/a/56916686t)
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[实现 Omit](https://github.com/type-challenges/type-challenges/blob/master/questions/3-medium-omit/README.zh-CN.md)
+
