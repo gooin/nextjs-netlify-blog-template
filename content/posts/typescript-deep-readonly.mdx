@@ -1,0 +1,70 @@
+---
+slug: typescript-deep-readonly
+title: "[type-chanlleges] 深度 Readonly"
+date: 2021-11-22
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+
+
+实现一个通用的`DeepReadonly<T>`，它将对象的每个参数及其子对象递归地设为只读。
+
+您可以假设在此挑战中我们仅处理对象。数组，函数，类等都无需考虑。但是，您仍然可以通过覆盖尽可能多的不同案例来挑战自己。
+
+例如
+
+```ts
+type X = { 
+  x: { 
+    a: 1
+    b: 'hi'
+  }
+  y: 'hey'
+}
+
+type Expected = { 
+  readonly x: { 
+    readonly a: 1
+    readonly b: 'hi'
+  }
+  readonly y: 'hey' 
+}
+
+const todo: DeepReadonly<X> // should be same as `Expected`
+```
+
+## 解 ：
+```ts
+type DeepReadonly2<T> = keyof T extends never
+? T 
+: { readonly [O in keyof T]: DeepReadonly<T[O]> }
+```
+
+不会做，翻了大神们的答案，理解一下：
+
+这里用了一个三元表达式， 如果 `keyof T extends never` 即泛型T的key是空的时候，返回这个空的泛型本身，
+下面是关键的地方 , 如果是普通的没有递归的`ReadOnly`类型， `type ReadOnly<T> = { readonly[K in keyof T] = T[K] }`，表示对T的每一个`Key`前面都加上`readonly`关键字，在这里需要递归调用，所以有`{ readonly [O in keyof T]: DeepReadonly<T[O]> }`。
+这个解法也是有漏洞的，如果传入的类型是联合的对象类型，其实是不生效的。
+```ts
+type Z = DeepReadonly<{ a: string } | { b: string }>
+```
+还有个不理解的地方，直接递归调用的话貌似是可以的，但是测试用例无法通过,貌似是对于`Function`的处理
+```ts
+type DeepReadonly2<T> = { 
+    readonly [O in keyof T]: DeepReadonly<T[O]> 
+}
+```
+
+
+
+### ref:
+[what is "extends never" used for?](https://stackoverflow.com/questions/68693054/what-is-extends-never-used-for/68693367)
+
+[答案](https://github.com/type-challenges/type-challenges/issues/187)
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[深度 Readonly](https://github.com/type-challenges/type-challenges/blob/master/questions/9-medium-deep-readonly/README.zh-CN.md)
+
