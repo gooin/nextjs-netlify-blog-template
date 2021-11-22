@@ -1,0 +1,40 @@
+---
+slug: typescript-tuple-to-union
+title: "[type-chanlleges] 元组转合集"
+date: 2021-11-22
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+
+
+实现泛型`TupleToUnion<T>`，它覆盖元组的值与其值联合。
+
+例如
+
+```ts
+type Arr = ['1', '2', '3']
+
+const a: TupleToUnion<Arr> // expected to be '1' | '2' | '3'
+```
+
+
+
+```ts
+type TupleToUnion<T extends unknown[]> = T[number]
+
+type TupleToUnion<T extends any[]> = keyof {
+     [O in T[number]]: O
+}
+```
+
+
+`T[number]` 返回泛型数组的元素
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[11 - 元组转换为对象](https://github.com/type-challenges/type-challenges/issues/4336)
+
