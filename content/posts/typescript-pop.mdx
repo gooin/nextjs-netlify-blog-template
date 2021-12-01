@@ -1,0 +1,55 @@
+---
+slug: typescript-pop
+title: "[type-chanlleges] 出堆"
+date: 2021-12-01
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+### 题目
+  
+
+  实现一个通用`Pop<T>`，它接受一个数组`T`并返回一个没有最后一个元素的数组。
+  
+  例如
+  
+  ```ts
+  type arr1 = ['a', 'b', 'c', 'd']
+  type arr2 = [3, 2, 1]
+  
+  type re1 = Pop<arr1> // expected to be ['a', 'b', 'c']
+  type re2 = Pop<arr2> // expected to be [3, 2]
+  ```
+  
+  **额外**：同样，您也可以实现`Shift`，`Push`和`Unshift`吗？
+
+
+## 解 ：
+```ts
+type Pop<T extends any[]> = T extends [... infer R, any] ? R : unknown
+
+```
+
+和上一篇类似，`T extends [... infer R, any]` 除了最后一个占位，通过`infer`指出除最后一位之外的类型，即`Pop`
+```
+type Shift<T extends any[]> = T extends [any, ... infer R] ? R : unknown
+```
+```
+type UnShift<T extends any[],K extends any[]> = [...K, ...T];
+```
+
+
+
+
+
+
+
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[出堆](https://github.com/type-challenges/type-challenges/blob/master/questions/16-medium-pop/README.zh-CN.md)
+
+
