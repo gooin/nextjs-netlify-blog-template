@@ -1,0 +1,21 @@
+---
+slug: css-font
+title: 适配Windows、MacOS黑体的CSS写法
+date: 2021-12-02
+author: yanzhitao
+tags:
+  - frontend
+---
+
+
+```
+span {
+        font-family: Helvetica,Arial,Alibaba PuHuiTi, Microsoft YaHei, PingFang SC, sans-serif;
+        font-weight: 400;
+}
+```
+先英文后中文，中文采用雅黑，Mac上使用苹方，不设置的话会用宋体字显示，奇丑无比。 最后`sans-serif` 保底。
+
+![20211202_ix71ib](https://cdn.jsdelivr.net/gh/crexk/pic-archive@main/uPic/20211202_ix71ib.png)
+![20211202_ElXEo6](https://cdn.jsdelivr.net/gh/crexk/pic-archive@main/uPic/20211202_ElXEo6.png)
+
