@@ -25,3 +25,5 @@ tags:
     name: webgl
   - slug: typescript
     name: typescript
+  - slug: linux
+    name: linux
