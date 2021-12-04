@@ -9,8 +9,11 @@ tags:
 ## 在客户端
 ```shell
 $ ssh-keygenGenerating public/private rsa key pair....$ lsid_rsa  id_rsa.pub  known_hosts
-
 ```
+
+### 简单方式 `ssh-copy-id` 命令， 如果此方式成功就不用看下面了～
+ssh-copy-id root@172.16.82.136　　
+![20211204_GYfqdt](https://cdn.jsdelivr.net/gh/crexk/pic-archive@main/uPic/20211204_GYfqdt.png)
 
 ## 在服务器端：
 将第一步生成的 `id_rsa.pub` 内容写入到
