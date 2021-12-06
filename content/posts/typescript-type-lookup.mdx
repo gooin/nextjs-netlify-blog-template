@@ -1,0 +1,64 @@
+---
+slug: typescript-type-lookup
+title: "[type-chanlleges] Type Lookup"
+date: 2021-12-06
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+### 题目
+  
+  有时，您可能希望根据其属性在并集中查找类型。
+
+在此挑战中，我们想通过在联合`Cat | Dog`中搜索公共`type`字段来获取相应的类型。换句话说，在以下示例中，我们期望`LookUp<Dog | Cat, 'dog'>`获得`Dog`，`LookUp<Dog | Cat, 'cat'>`获得`Cat`。
+
+```ts
+interface Cat {
+  type: 'cat'
+  breeds: 'Abyssinian' | 'Shorthair' | 'Curl' | 'Bengal'
+}
+
+interface Dog {
+  type: 'dog'
+  breeds: 'Hound' | 'Brittany' | 'Bulldog' | 'Boxer'
+  color: 'brown' | 'white' | 'black'
+}
+
+type MyDog = LookUp<Cat | Dog, 'dog'> // expected to be `Dog`
+```
+
+## 解1： 
+```ts
+type LookUp<U, T extends string> = U extends {type: T}? U:never
+```
+
+
+## 解2 ：
+```ts
+type LookUp<U, T extends string> = {
+   [K in T]: U extends {type: T} ? U : never
+}[T]
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[Type Lookup](https://github.com/type-challenges/type-challenges/blob/master/questions/62-medium-type-lookup/README.zh-CN.md)
+
+
+
+
