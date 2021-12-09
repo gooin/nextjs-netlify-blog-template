@@ -1,0 +1,34 @@
+---
+slug: typescript-trim-left
+title: "[type-chanlleges] Trim Left "
+date: 2021-12-09
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+  ### 题目
+  
+  实现 `TrimLeft<T>` ，它接收确定的字符串类型并返回一个新的字符串，其中新返回的字符串删除了原字符串开头的空白字符串。
+  
+  例如
+  
+  ```ts
+  type trimed = TrimLeft<'  Hello World  '> // 应推导出 'Hello World  '
+  ```
+
+## 解：
+```ts
+type Space = ' '| '\t' | '\n'
+type TrimLeft<T extends string> = T extends `${Space}${infer R}` ? TrimLeft<R> : T
+```
+
+不会做，参考了一下大佬们的答案。
+`T` 是字符串，可以用模板字符串的语法，本题是 `Trim **Left**` 所以将左侧用可以出现的空白字符串替换，后面的使用`infer` 推断， 递归调用直到左侧没有空白字符串结束。
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[Trim Left](https://github.com/type-challenges/type-challenges/blob/master/questions/106-medium-trimleft/README.zh-CN.md)
+
