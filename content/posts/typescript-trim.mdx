@@ -1,0 +1,38 @@
+---
+slug: typescript-trim
+title: "[type-chanlleges] Trim"
+date: 2021-12-09
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+  ### Question  
+Implement `Trim<T>` which takes an exact string type and returns a new string with the whitespace from both ends removed.
+  
+  For example
+  
+  ```ts
+  type trimed = Trim<'  Hello World  '> // expected to be 'Hello World'
+  ```
+  
+
+## 解：
+```ts
+type Space = ' ' | '\n' | '\t';
+type TrimeLeft<T extends string> = T extends `${Space}${infer R}` ? TrimeLeft<R> : T
+
+type TrimRight<S extends string> = S extends `${infer R}${Space}` ? TrimRight<R> : S
+
+type Trim<S extends string> = TrimeLeft<TrimRight<S>>
+```
+
+
+`T` 是字符串，可以用模板字符串的语法，本题是 `Trim` 所以将左侧和右侧分别用可以出现的空白字符串替换，后面的使用`infer` 推断， 递归调用直到没有空白字符串结束。
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[Trim](https://github.com/type-challenges/type-challenges/blob/master/questions/108-medium-trim/README.md)
+
