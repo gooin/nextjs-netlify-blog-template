@@ -4,6 +4,7 @@ import PostItem from "./PostItem";
 import TagLink from "./TagLink";
 import Pagination from "./Pagination";
 import { TagContent } from "../lib/tags";
+import TagButton from './TagButton';
 
 type Props = {
   posts: PostContent[];
@@ -14,6 +15,7 @@ type Props = {
   };
 };
 export default function PostList({ posts, tags, pagination }: Props) {
+
   return (
     <div className={"container"}>
       <div className={"posts"}>
@@ -21,6 +23,11 @@ export default function PostList({ posts, tags, pagination }: Props) {
           {posts.map((it, i) => (
             <li key={i}>
               <PostItem post={it} />
+                {it.tags && it.tags.map((tag, i) => (
+                    <span key={i}>
+                        <TagButton tag={{ name:tag,slug:tag }} />
+                    </span>
+                ))}
             </li>
           ))}
         </ul>
@@ -65,6 +72,9 @@ export default function PostList({ posts, tags, pagination }: Props) {
         }
         .post-list {
           flex: 1 0 auto;
+        }
+        .post-list span{
+            margin-left: .5rem;
         }
         .categories {
           display: none;

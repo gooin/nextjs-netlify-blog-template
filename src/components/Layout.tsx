@@ -24,7 +24,7 @@ export default function Layout({ children }: Props) {
                     display: block;
                     padding: 4rem 0;
                     box-sizing: border-box;
-                    height: 100%;
+                    min-height: 100%;
                     //background-color: #e493d0;
                     background-image: radial-gradient(closest-side, rgba(102, 204, 255, 0.45), rgba(173, 216, 230, 0)),
                     radial-gradient(closest-side, rgba(99, 255, 251, 0.67), rgba(238, 192, 198, 0)),
