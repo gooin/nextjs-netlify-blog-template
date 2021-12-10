@@ -1,0 +1,34 @@
+---
+slug: typescript-capitalize
+title: "[type-chanlleges] Capitalize"
+date: 2021-12-10
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+
+### Question
+
+Implement `Capitalize<T>` which converts the first letter of a string to uppercase and leave the rest as-is.
+
+For example
+
+  ```ts
+  type capitalized = Capitalize<'hello world'> // expected to be 'Hello world'
+  ```
+
+
+## 解：
+```ts
+type Capitalize<T extends string> = T extends `${infer F}${infer Rest}` ? `${Uppercase<F>}${Rest}` : T
+```
+
+跟昨天的 [Trim](/posts/typescript-trim) 类似。用`infer`推断出首字符，然后用内置的`Uppercase`将字符转为大写，然后拼接剩下的字符。
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[Capitalize ](https://github.com/type-challenges/type-challenges/blob/master/questions/110-medium-capitalize/README.md)
+
