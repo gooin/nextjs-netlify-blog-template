@@ -1,0 +1,39 @@
+---
+slug: typescript-replace
+title: "[type-chanlleges] Replace"
+date: 2021-12-13
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+
+### Question
+
+Implement `Replace<S, From, To>` which replace the string `From` with `To` once in the given string `S`
+
+For example
+
+  ```ts
+  type replaced = Replace<'types are fun!', 'fun', 'awesome'> // expected to be 'types are awesome!'
+  ```
+
+## 解：
+```ts
+type Replace<S extends string,From extends string,To extends string> = From extends ''
+? S
+: S extends `${infer SS}${From}${infer EE}`? `${SS}${To}${EE}` : S
+```
+
+跟 [Trim](/posts/typescript-trim) 类似。用`infer`推断出字符，替换就行。
+这里有一个特殊的用例，适配匹配空字符串，所以有前面的`From extends ''? S : S ...`
+```ts
+  Expect<Equal<Replace<'foobarbar', '', 'foo'>, 'foobarbar'>>
+```
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[Replace](https://github.com/type-challenges/type-challenges/blob/master/questions/116-medium-replace/README.md)
+
