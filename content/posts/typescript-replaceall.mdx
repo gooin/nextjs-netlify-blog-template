@@ -1,0 +1,44 @@
+---
+slug: typescript-replaceall
+title: "[type-chanlleges] ReplaceAll"
+date: 2021-12-14
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+  ### Question
+  
+  Implement `ReplaceAll<S, From, To>` which replace the all the substring `From` with `To` in the given string `S`
+  
+  For example
+  
+  ```ts
+  type replaced = ReplaceAll<'t y p e s', ' ', ''> // expected to be 'types'
+  ```
+  
+
+
+## 解：
+```ts
+type ReplaceAll<S extends string, From extends string, To extends string> =
+    From extends ''
+        ? S
+        : S extends `${infer SS}${From}${infer EE}`
+            ? `${SS}${To}${ReplaceAll<EE, From, To>}`
+            : S
+```
+
+跟 [Replace](/posts/typescript-replace) 类似。用`infer`推断头部，尾部的类型，用`S extends ${infer SS}${From}${infer EE}` 拼出要替换的单词， 因为要替换全部， 所以从左往右递归调用`${SS}${To}${ReplaceAll<EE, From, To>}`即可。
+前面的`From extends '' ? S: ...`是为了适配下面的用例。
+
+```ts
+  Expect<Equal<ReplaceAll<'foobarbar', '', 'foo'>, 'foobarbar'>>,
+```
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[ReplaceAll](https://github.com/type-challenges/type-challenges/blob/master/questions/119-medium-replaceall/README.md)
+
