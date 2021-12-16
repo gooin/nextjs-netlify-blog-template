@@ -1,0 +1,41 @@
+---
+slug: typescript-append-argument
+title: "[type-chanlleges] 追加参数 "
+date: 2021-12-14
+author: yanzhitao
+tags:
+  - frontend
+  - typescript
+---
+### 题目
+
+  > 由 @antfu 翻译
+
+实现一个范型 `AppendArgument<Fn, A>`，对于给定的函数类型 `Fn`，以及一个任意类型 `A`，返回一个新的函数 `G`。`G` 拥有 `Fn` 的所有参数并在末尾追加类型为 `A` 的参数。
+
+  ```typescript
+  type Fn = (a: number, b: string) => number
+
+  type Result = AppendArgument<Fn, boolean>
+  // 期望是 (a: number, b: string, x: boolean) => number
+  ```
+
+  > 本挑战来自于 [@maciejsikora](https://github.com/maciejsikora) 在 Dev.io 上的[文章](https://dev.to/macsikora/advanced-typescript-exercises-question-4-495c)
+
+  > 在 Github 上查看：https://tsch.js.org/191/zh-CN
+
+
+
+## 解：
+```ts
+type AppendArgument<Fn, A> = Fn extends (...args: infer N) => infer R ? (...args: [...N, A]) => R : Fn;
+```
+
+通过`infer` 提取到函数`Fn`的参数`N`, 及返回值`R`， 在返回的函数参数中添加`A`即可。
+
+### ref:
+
+[type-chanlleges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
+
+[追加参数](https://github.com/type-challenges/type-challenges/blob/master/questions/191-medium-append-argument/README.zh-CN.md)
+
