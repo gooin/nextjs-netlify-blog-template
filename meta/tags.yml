@@ -27,3 +27,5 @@ tags:
     name: typescript
   - slug: linux
     name: linux
+  - slug: macos
+    name: MacOS
