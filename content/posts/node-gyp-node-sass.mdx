@@ -1,0 +1,51 @@
+---
+slug: node-gyp-node-sass
+title: 远古项目 node-gyp node-sass 报错
+date: 2022-03-23
+author: yanzhitao
+tags:
+  - frontend
+---
+## 先检查 lock文件中的 node-sass版本
+
+
+## 用n安装对应的node版本（macOS）
+
+```
+npm install -g n
+n 14.19.0
+n
+yarn
+
+```
+
+## 用nvs安装node版本（windows）
+
+https://github.com/jasongin/nvs
+
+
+
+```
+nvs add 14.19.0 
+nvs use 14.19.0 
+node -v
+// v14.19.0
+yarn
+```
+
+
+如果还是失败，检查python版本，使用conda管理python版本
+
+
+### 列出环境
+
+`conda env list`
+
+编译nodesass需要python2.7
+
+`conda create -n py2.7 python=2.7.14`
+
+**需要用cmd，powershell不行**
+
+`conda activate py2.7`
+
