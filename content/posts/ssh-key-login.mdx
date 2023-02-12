@@ -7,15 +7,31 @@ tags:
   - linux
 ---
 ## 在客户端
+
+### Linux
+
 ```shell
-$ ssh-keygenGenerating public/private rsa key pair....$ lsid_rsa  id_rsa.pub  known_hosts
+$ ssh-keygen
+Generating public/private rsa key pair.
+...
+$ ls
+id_rsa  id_rsa.pub  known_hosts
 ```
 
-### 简单方式 `ssh-copy-id` 命令， 如果此方式成功就不用看下面了～
+#### 简单方式 `ssh-copy-id` 命令， 如果此方式成功就不用看下面了～
+
 `ssh-copy-id root@192.168.88.78`　
 ![20211204_GYfqdt](https://cdn.jsdelivr.net/gh/crexk/pic-archive@main/uPic/20211204_GYfqdt.png)
 
+### Windows
+
+
+```shell
+type $env:USERPROFILE.ssh\id_rsa.pub | ssh root@192.168.30.31 "cat >> .ssh/authorized_keys"
+```
+
 ## 在服务器端：
+
 将第一步生成的 `id_rsa.pub` 内容写入到
 `~/.ssh/authorized_keys`中
 
@@ -23,7 +39,6 @@ $ ssh-keygenGenerating public/private rsa key pair....$ lsid_rsa  id_rsa.pub
 
 如果登录普通用户，如 `gisviewer`: 
 则在 `/home/gisviewer/.ssh/authorized_keys` 中
-
 
 如果是`root`,
 在 `/root/.ssh/authorized_keys` 中
@@ -33,20 +48,19 @@ $ ssh-keygenGenerating public/private rsa key pair....$ lsid_rsa  id_rsa.pub
 ## 修改服务端ssh配置
 
 `vim /etc/ssh/sshd_config`
+
 ```
-PasswordAuthentication yes　　　　　　# 口令登录RSAAuthentication yes　　　　　　　　　# RSA认证PubkeyAuthentication yes　　　　　　　# 公钥登录 
+PasswordAuthentication yes　　　　　　# 口令登录
+RSAAuthentication yes　　　　　　　　　# RSA认证
+PubkeyAuthentication yes　　　　　　　# 公钥登录 
 PermitRootLogin yes                    # Root 登录
 ```
-
 ## 重启ssh服务
+
 `service ssh restart`
 
 ## 客户端用私钥登录
+
 `ssh -i id_rsa root@192.168.88.78`
+
 ![](https://cdn.jsdelivr.net/gh/crexk/pic-archive@main/picgo/20211203164148.png)
-
-
-
-
-
-
